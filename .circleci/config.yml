@@ -41,3 +41,6 @@ workflows:
     jobs:
       - docker_layer_caching
       - machine_dlc
+  vmming_jobs:
+    jobs:
+      - docker_layer_caching
