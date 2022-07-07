@@ -11,7 +11,7 @@ jobs:
         version: 20.10.7
         docker_layer_caching: true
     - run:
-        name: Build a really basic docker image
+        name: Build a really basic docker image aaa
         command: |
           dockerfile=Dockerfile
           echo "FROM alpine:latest" > $dockerfile
@@ -26,7 +26,7 @@ jobs:
     - run: which docker
     - run: docker -v
     - run:
-        name: Build a really basic docker image
+        name: Build a really basic docker image aaa
         command: |
           dockerfile=Dockerfile
           echo "FROM alpine:latest" > $dockerfile
