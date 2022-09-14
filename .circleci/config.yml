@@ -14,7 +14,8 @@ jobs:
         name: Build a really docker image
         command: |
           dockerfile=Dockerfile
-          echo "FROM alpine:latest" > $dockerfile
+          echo "FROM gcc:11.2.0" > $dockerfile
+          echo "RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y   cmake   python3-pip   python3" >> $dockerfile
           echo "RUN echo hello" >> $dockerfile
           docker build -f $dockerfile --tag throwaway:$CIRCLE_BUILD_NUM .
           docker run --rm throwaway:$CIRCLE_BUILD_NUM
@@ -29,7 +30,8 @@ jobs:
         name: Build a really docker image
         command: |
           dockerfile=Dockerfile
-          echo "FROM alpine:latest" > $dockerfile
+          echo "FROM gcc:11.2.0" > $dockerfile
+          echo "RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y   cmake   python3-pip   python3" >> $dockerfile
           echo "RUN echo hello" >> $dockerfile
           docker build -f $dockerfile --tag throwaway:$CIRCLE_BUILD_NUM .
           docker run --rm throwaway:$CIRCLE_BUILD_NUM
