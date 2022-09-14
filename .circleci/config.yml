@@ -17,6 +17,7 @@ jobs:
           dockerfile=Dockerfile
           echo "FROM gcc:11.2.0" > $dockerfile
           echo "RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y   cmake   python3-pip   python3" >> $dockerfile
+          echo "RUN pip3 install --upgrade conan" >> $dockerfile
           echo "RUN echo hello" >> $dockerfile
           docker build -f $dockerfile --tag throwaway:$CIRCLE_BUILD_NUM .
           docker inspect throwaway:$CIRCLE_BUILD_NUM
@@ -35,6 +36,7 @@ jobs:
           dockerfile=Dockerfile
           echo "FROM gcc:11.2.0" > $dockerfile
           echo "RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y   cmake   python3-pip   python3" >> $dockerfile
+          echo "RUN pip3 install --upgrade conan" >> $dockerfile
           echo "RUN echo hello" >> $dockerfile
           docker build -f $dockerfile --tag throwaway:$CIRCLE_BUILD_NUM .
           docker inspect throwaway:$CIRCLE_BUILD_NUM
