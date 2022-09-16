@@ -12,9 +12,17 @@ jobs:
         version: 20.10.7
         docker_layer_caching: true
     - run:
+        command: |
+          while true; do
+            sleep 1
+            printf "\n\n$(date)\n"
+            docker images ls -a
+            echo "======"
+          done
+        background: true
+    - run:
         name: Build a really docker image
         command: |
-          docker images ls -a
           dockerfile=Dockerfile
           echo "FROM golang:1.16 AS builder" > $dockerfile
           echo "RUN echo hello" >> $dockerfile
@@ -24,7 +32,6 @@ jobs:
           echo "RUN pip3 install --upgrade conan" >> $dockerfile
           echo "RUN echo hello" >> $dockerfile
           docker build -f $dockerfile --tag throwaway:$CIRCLE_BUILD_NUM .
-          docker images ls -a
           docker run --rm throwaway:$CIRCLE_BUILD_NUM
     - run: docker version
   machine_dlc:
@@ -34,6 +41,15 @@ jobs:
     steps:
     - run: which docker
     - run: docker -v
+    - run:
+        command: |
+          while true; do
+            sleep 1
+            printf "\n\n$(date)\n"
+            docker images ls -a
+            echo "======"
+          done
+        background: true
     - run:
         name: Build a really docker image
         command: |
