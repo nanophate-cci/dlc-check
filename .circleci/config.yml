@@ -6,6 +6,7 @@ jobs:
     - image: cimg/base:stable
     parallelism: 2
     steps:
+    - checkout
     - run: which docker
     - run: docker -v
     - setup_remote_docker:
