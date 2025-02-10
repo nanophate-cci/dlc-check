@@ -12,6 +12,7 @@ jobs:
     - run: docker -v
     - setup_remote_docker:
         docker_layer_caching: true
+    - run: docker image ls --all
     - run:
         command: |
           while true; do
@@ -37,7 +38,7 @@ jobs:
           docker build -f $dockerfile --tag throwaway:$CIRCLE_BUILD_NUM .
           docker images ls -a
           docker run --rm throwaway:$CIRCLE_BUILD_NUM
-    - run: docker version
+    - run: docker image ls --all
   machine_dlc:
     machine:
       docker_layer_caching: true
@@ -46,6 +47,7 @@ jobs:
     - checkout 
     - run: which docker
     - run: docker -v
+    - run: docker image ls --all
     - run:
         command: |
           while true; do
@@ -71,6 +73,7 @@ jobs:
           docker images ls -a
           docker run --rm throwaway:$CIRCLE_BUILD_NUM
     - run: docker version
+    - run: docker image ls --all
     
 workflows:
   version: 2
