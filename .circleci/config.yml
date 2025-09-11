@@ -39,6 +39,21 @@ jobs:
           docker images ls -a
           docker run --rm throwaway:$CIRCLE_BUILD_NUM
     - run: docker image ls --all
+    - run:
+        name: Check Docker cache status
+        command: |
+          echo "=== Docker Images Present ==="
+          docker image ls --all
+          echo ""
+          echo "=== Docker Build Cache ==="
+          docker builder du --verbose || docker system df -v
+          echo ""
+          echo "=== Recently Built Image Layers ==="
+          # Get the most recently created image ID
+          LATEST_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" | head -1)
+          echo "Checking image: $LATEST_IMAGE"
+          docker history $LATEST_IMAGE --no-trunc
+       
   machine_dlc:
     machine:
       docker_layer_caching: true
@@ -74,7 +89,22 @@ jobs:
           docker run --rm throwaway:$CIRCLE_BUILD_NUM
     - run: docker version
     - run: docker image ls --all
-    
+    # Add this step after your Docker build to see cached images and layers
+    - run:
+        name: Check Docker cache status
+        command: |
+          echo "=== Docker Images Present ==="
+          docker image ls --all
+          echo ""
+          echo "=== Docker Build Cache ==="
+          docker builder du --verbose || docker system df -v
+          echo ""
+          echo "=== Recently Built Image Layers ==="
+          # Get the most recently created image ID
+          LATEST_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" | head -1)
+          echo "Checking image: $LATEST_IMAGE"
+          docker history $LATEST_IMAGE --no-trunc
+         
 workflows:
   version: 2
   vm_jobs:
